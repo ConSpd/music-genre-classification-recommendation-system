@@ -5,7 +5,7 @@ A Deep Learning approach to music genre classification that recognises the genre
 The Dataset used for the classification and recommendation system is the GTZAN Dataset that consists of 10 genres where each one contains 100 songs of 30 second duration. The extracted features are the MFCC both for the Music Genre Classification and for the Recommendation System.
 
 ## Music Genre Classification
-The MGC part contains The MFCC extractor `preprocess.py` and 3 Deep Neural Architectures that tackle the MGC part.
+The MGC directory contains The MFCC extractor `preprocess.py` and 3 Deep Neural Architectures that tackle the MGC part.
 1. Multilayer Perceptron is `mlpclassifier.py`. The `overfitsolve.py` solves the problem of overfitting but still an MLP model.
 2. Convolutional Neural Network is `cnnclassifier.py`, the CNN is the model with the highest accuracy and also the one that is used in the final app.
 3. Long-Short Term Memory Network is `lstm.py`.
