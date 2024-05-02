@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles/style.css')}}">
+</head>
+
+<body>
+    <h1>RESULTS</h1>
+    <div style="width: 80%; display: table;">
+        <div style="display: table-row; height: 100px;">
+            <div style="width: 50%; display: table-cell; vertical-align: bottom;" class="box";>
+                <canvas id="barChart" width="600" height="450"></canvas>
+            </div>
+            <div class="cellContainer">
+                <div style="margin: 15px;"></div>
+            </div>
+            <div style="display: table-cell; vertical-align: middle; padding:25px" class="box">
+                {% for s in paths %}
+                    <div><p><strong>Recommendation {{ loop.index0 + 1 }} : {{ s[1] }} </strong></p></div>
+                    <audio controls>
+                        <source src="{{ url_for('static', filename=s[0][32:]) }}" type="audio/wav">
+                        Your browser does not support the audio element.
+                    </audio>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <form action="/index">
+        <br><br>
+        <input type="submit" value="Upload New Song" class="button-54">
+    </form>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var ctx = document.getElementById('barChart').getContext('2d');
+
+            var data = {
+                labels: [{% for genre in genres %}"{{ genre }}"{% if not loop.last %},{% endif %}{% endfor %}],
+                datasets: [{
+                    label: 'Scores',
+                    data: [{% for score in sum_preds %}{{ score }}{% if not loop.last %},{% endif %}{% endfor %}],
+                    backgroundColor: 'rgba(52, 152, 219, 0.7)', // Adjust the color as needed
+                    borderColor: 'rgba(52, 152, 219, 1)',
+                    borderWidth: 1
+                }]
+            };
+
+            var options = {
+                responsive: false, // Set responsive to false
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            };
+
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: data,
+                options: options
+            });
+        });
+    </script>
+</body>
+</html>
